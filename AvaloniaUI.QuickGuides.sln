@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11222.16 d18.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadingImages", "LoadingImages\LoadingImages.csproj", "{1829A943-9C42-4F3F-B189-5C378F0FB8C2}"
 EndProject
@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleFonts", "GoogleFonts\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MakingLists", "MakingLists\MakingLists.csproj", "{5FA54F40-2388-42C6-AAF4-303E046CAC3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BindingsAndConverters", "BindingsAndConverters\BindingsAndConverters.csproj", "{6622FB60-2ABB-486D-AE0F-74ADE325248C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BindingsAndConverters.AlreadyRead", "BindingsAndConverters\BindingsAndConverters.AlreadyRead.csproj", "{6622FB60-2ABB-486D-AE0F-74ADE325248C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileOps", "FileOps\FileOps.csproj", "{BAC99FFA-3A57-49BE-AFCA-410F029CC8C7}"
 EndProject
@@ -41,9 +41,6 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{1829A943-9C42-4F3F-B189-5C378F0FB8C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -114,5 +111,8 @@ Global
 		{F6022484-FCCF-4DD7-8366-10BB3382C531}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6022484-FCCF-4DD7-8366-10BB3382C531}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6022484-FCCF-4DD7-8366-10BB3382C531}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

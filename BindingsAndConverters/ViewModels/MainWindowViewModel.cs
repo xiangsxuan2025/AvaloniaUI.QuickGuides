@@ -4,6 +4,6 @@ namespace BindingConvertersExample.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    // 代码生成器,可以让通知属性更简洁
+    // 代码生成器,可以让通知属性更简洁. 来自CommunityToolkit.Mvvm.ComponentModel;
     [ObservableProperty] private int _age;
 }
