@@ -33,6 +33,97 @@
 		<StackPanel Spacing="10">
 			<TextBlock FontWeight="Bold">Enter your date of birth here.</TextBlock>
 			<DatePicker SelectedDate="{Binding Age, Converter={StaticResource BirthdateToAgeConverter}, Mode=OneWayToSource}"/>
+			<!--
+			为什么Converter用StaticResource?
+			1. 性能优化
+			StaticResource在XAML加载时一次性解析并缓存：
+
+			xml
+			<!-- 只在加载时查找一次，后续使用缓存的值 -->
+			<Run Text="{Binding Age, Converter={StaticResource AgeToPluralConverter}}"/>
+			对比DynamicResource（运行时动态查找）：
+
+			xml
+			<!-- 每次都会重新查找，性能开销大 -->
+			<Run Text="{Binding Age, Converter={DynamicResource AgeToPluralConverter}}"/>
+			2. Converter的特性决定
+			Converter通常是：
+
+			无状态的 - 不依赖运行时数据
+
+			线程安全的 - 可在多个绑定间共享
+
+			单例式的 - 一个实例足够处理所有转换
+
+			csharp
+			public class AgeToPluralConverter : IValueConverter
+			{
+			// 无状态，不需要多个实例
+			public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+			{
+			return (value is int age && age != 1) ? "s" : "";
+			}
+
+			public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+			{
+			throw new NotImplementedException();
+			}
+			}
+			3. 资源定义方式
+			在Window.Resources或Application.Resources中定义的资源天然适合StaticResource：
+
+			xml
+			<Window.Resources>
+				<!-- 这里定义的资源在窗口生命周期内不变 -->
+				<converters:AgeToPluralConverter x:Key="AgeToPluralConverter"/>
+			</Window.Resources>
+			4. 什么时候用DynamicResource
+			只有在资源可能在运行时改变时才用DynamicResource：
+
+			xml
+			<!-- 主题色可能在运行时改变 -->
+			<TextBlock Foreground="{DynamicResource ThemeBrush}"/>
+
+			<!-- 本地化文本可能在运行时改变 -->
+			<TextBlock Text="{DynamicResource LocalizedString}"/>
+			但Converter几乎从不需要在运行时改变。
+
+			5. 实际代码示例
+			xml
+			<Window.Resources>
+				<!-- Converter定义为StaticResource -->
+				<converters:BooleanToVisibilityConverter x:Key="BoolToVisible"/>
+				<converters:StringToUpperConverter x:Key="ToUpper"/>
+			</Window.Resources>
+
+			<StackPanel>
+				<!-- 使用StaticResource引用Converter -->
+				<TextBlock
+				Text="{Binding Name, Converter={StaticResource ToUpper}}"
+				Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisible}}"/>
+
+				<!-- 多个控件共享同一个Converter实例 -->
+				<Button
+				Content="{Binding ButtonText, Converter={StaticResource ToUpper}}"
+				Visibility="{Binding IsButtonVisible, Converter={StaticResource BoolToVisible}}"/>
+			</StackPanel>
+			6. 如果误用DynamicResource
+			xml
+			<!-- 不推荐：不必要的性能开销 -->
+			<TextBlock Text="{Binding Age, Converter={DynamicResource AgeToPluralConverter}}"/>
+			这会导致：
+
+			每次绑定更新时都重新查找资源
+
+			额外的性能开销
+
+			没有实际好处（因为Converter不会在运行时改变）
+
+			7. 最佳实践总结
+			资源类型	使用场景	性能
+			StaticResource	Converter、样式、静态数据	✅ 高效
+			DynamicResource	主题、本地化、运行时变化的资源	⚠️ 根据需要
+			-->
 			<TextBlock>
 				<Run>Your age is </Run>
 				<Run Text="{Binding Age}"/>
